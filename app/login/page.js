@@ -60,7 +60,7 @@ export default function LoginPage() {
             placeholder="Email"
             className="w-full rounded-lg border p-3 outline-none"
             value={email}
-            onChange={(e)=>setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
 
@@ -69,7 +69,7 @@ export default function LoginPage() {
             placeholder="Password"
             className="w-full rounded-lg border p-3 outline-none"
             value={password}
-            onChange={(e)=>setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
 
@@ -87,8 +87,8 @@ export default function LoginPage() {
           </button>
 
           <p className="text-center text-sm">
+            Don&#39;t have an account?
 
-            Don't have an account?
 
             <Link
               href="/signup"
