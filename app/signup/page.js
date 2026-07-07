@@ -11,15 +11,15 @@ export default function SignupPage() {
 
     const supabase = createClient();
 
-    const [email,setEmail]=useState("");
+    const [email, setEmail] = useState("");
 
-    const [password,setPassword]=useState("");
+    const [password, setPassword] = useState("");
 
-    const [loading,setLoading]=useState(false);
+    const [loading, setLoading] = useState(false);
 
-    const [error,setError]=useState("");
+    const [error, setError] = useState("");
 
-    async function handleSignup(e){
+    async function handleSignup(e) {
 
         e.preventDefault();
 
@@ -27,7 +27,7 @@ export default function SignupPage() {
 
         setError("");
 
-        const {data,error}=await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
 
             email,
 
@@ -35,7 +35,7 @@ export default function SignupPage() {
 
         });
 
-        if(error){
+        if (error) {
 
             setError(error.message);
 
@@ -45,22 +45,22 @@ export default function SignupPage() {
 
         }
 
-        if(data.user){
+        if (data.user) {
 
-            await supabase
+            const { error: profileError } = await supabase
+                .from("profiles")
+                .insert({
+                    id: data.user.id,
+                    email: data.user.email,
+                    plan: "FREE",
+                });
 
-            .from("profiles")
-
-            .insert({
-
-                id:data.user.id,
-
-                email:data.user.email,
-
-                plan:"FREE"
-
-            });
-
+            if (profileError) {
+                console.error(profileError);
+                setError(profileError.message);
+                setLoading(false);
+                return;
+            }
         }
 
         setLoading(false);
@@ -71,15 +71,15 @@ export default function SignupPage() {
 
     }
 
-    return(
+    return (
 
         <main className="min-h-screen flex items-center justify-center bg-slate-50">
 
             <form
 
-            onSubmit={handleSignup}
+                onSubmit={handleSignup}
 
-            className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg border"
+                className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg border"
 
             >
 
@@ -99,33 +99,33 @@ export default function SignupPage() {
 
                     <input
 
-                    type="email"
+                        type="email"
 
-                    placeholder="Email"
+                        placeholder="Email"
 
-                    className="w-full rounded-lg border p-3"
+                        className="w-full rounded-lg border p-3"
 
-                    value={email}
+                        value={email}
 
-                    onChange={(e)=>setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
 
-                    required
+                        required
 
                     />
 
                     <input
 
-                    type="password"
+                        type="password"
 
-                    placeholder="Password"
+                        placeholder="Password"
 
-                    className="w-full rounded-lg border p-3"
+                        className="w-full rounded-lg border p-3"
 
-                    value={password}
+                        value={password}
 
-                    onChange={(e)=>setPassword(e.target.value)}
+                        onChange={(e) => setPassword(e.target.value)}
 
-                    required
+                        required
 
                     />
 
@@ -141,9 +141,9 @@ export default function SignupPage() {
 
                     <button
 
-                    disabled={loading}
+                        disabled={loading}
 
-                    className="w-full rounded-lg bg-indigo-600 py-3 text-white"
+                        className="w-full rounded-lg bg-indigo-600 py-3 text-white"
 
                     >
 
@@ -151,13 +151,13 @@ export default function SignupPage() {
 
                             loading
 
-                            ?
+                                ?
 
-                            "Creating..."
+                                "Creating..."
 
-                            :
+                                :
 
-                            "Create Account"
+                                "Create Account"
 
                         }
 
@@ -169,9 +169,9 @@ export default function SignupPage() {
 
                         <Link
 
-                        href="/login"
+                            href="/login"
 
-                        className="ml-2 text-indigo-600"
+                            className="ml-2 text-indigo-600"
 
                         >
 

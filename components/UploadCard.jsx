@@ -7,7 +7,7 @@ import SummaryCard from "./SummaryCard";
 import SkillsCard from "./SkillsCard";
 import FeedbackCard from "./FeedbackCard";
 
-export default function UploadCard() {
+export default function UploadCard({ profile }) {
     const [loading, setLoading] = useState(false);
     const [response, setResponse] = useState(null);
     const [file, setFile] = useState(null);
@@ -81,6 +81,99 @@ export default function UploadCard() {
                 }
             `}
         >
+            <div className="mb-10 rounded-2xl border bg-white p-6 shadow-sm">
+
+                <div className="flex items-center justify-between">
+
+                    <div>
+
+                        <h2 className="text-2xl font-bold">
+
+                            Welcome 👋
+
+                        </h2>
+
+                        <p className="mt-2 text-slate-500">
+
+                            {profile && profile.email}
+
+                        </p>
+
+                    </div>
+
+                    <div className="text-right">
+
+                        <p className="text-sm text-slate-500">
+
+                            Current Plan
+
+                        </p>
+
+                        <span
+                            className={`inline-block mt-2 rounded-full px-4 py-2 text-sm font-semibold
+
+                ${profile?.plan === "PRO"
+
+                                    ?
+
+                                    "bg-green-100 text-green-700"
+
+                                    :
+
+                                    "bg-orange-100 text-orange-700"
+
+                                }`}
+                        >
+
+                            {profile?.plan ?? "FREE"}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+            {
+                profile?.plan === "FREE" &&
+
+                <div className="mb-10 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 p-8 text-white">
+
+                    <h2 className="text-2xl font-bold">
+
+                        Unlock ResumeIQ Pro
+
+                    </h2>
+
+                    <p className="mt-2 text-indigo-100">
+
+                        Unlimited AI Resume Reviews
+
+                        Priority Analysis
+
+                        Future Resume Builder
+
+                        Job Match
+
+                        Cover Letter Generator
+
+                    </p>
+
+                    <a
+
+                        href="/pricing"
+
+                        className="mt-6 inline-block rounded-xl bg-white px-6 py-3 font-semibold text-indigo-600"
+
+                    >
+
+                        Upgrade
+
+                    </a>
+
+                </div>
+
+            }
             <input {...getInputProps()} />
 
             {file ? (

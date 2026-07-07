@@ -34,7 +34,7 @@ export default function Home() {
               </Link>
 
               <a
-                href="#pricing"
+                href="/pricing"
                 className="rounded-xl border px-6 py-3"
               >
                 Pricing
